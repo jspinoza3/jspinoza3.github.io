@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, button {
+  font-size: 60px;
+}
+</style>
+</head>
+<body>
+<button id="butt">Begin</button>
+<a href="?s=15&n=20">knee</a>
+<a href="?s=15&n=10">knees</a>
+<a href="?s=8&n=10">pelvic</a>
+<a href="?s=10&n=10">fig4</a>
+<a href="?s=8&n=20">Cat</a>
+<a href="?s=15&n=10">baby</a>
+<a href="?s=18&n=16">standing hip</a>
+<script>
+
+//var initiate = true;  
+
+  var tapped = function() {
+
+			
+
+ //       if(initiate)
+ //       {
+			bell.play();
+			bell.pause();
+			bell.currentTime = 0;
+			gong.play();
+			gong.pause();
+			gong.currentTime = 0;
+            initiate = false;
+            window.setTimeout(()=>gong.playskies(),2000);
+    //    }
+
+		butt.disabled=true;
+		butt.removeEventListener('touchstart',tapped);
+		butt.removeEventListener('click',tapped);
+
+}
+  
+  butt = document.getElementById("butt");
+butt.addEventListener('touchstart', tapped, false);
+butt.addEventListener('click', tapped, false);
+  
+const bell = new Audio();
+const gong = new Audio();
+bell.src = "bell.mp3";
+//gong.setAttribute("controls", "controls");
+var p = new URLSearchParams(window.location.search)
+var n;
+ var s = p.get("s");
+//bell.setAttribute("autoplay", "autoplay");
+//document.body.appendChild(gong);
+gong.src = "gong.mp3";//"http://time-time.net/timer/sounds/bell.mp3"; 
+
+gong.playskies =
+function (e)
+{
+    
+    n = p.get("n");
+    if (n!=0)
+    {
+        //this.hidden=true;
+        //this.pause();
+		this.currentTime = 0;
+        this.play();
+        q();
+    }
+    
+}
+
+
+
+function q ()
+{
+    var sound = n==1 ? gong:bell
+    window.setTimeout(()=>{sound.playskies();},s*1000);
+}
+
+bell.playskies =
+function (){
+    //this.pause();
+	this.currentTime = 0;
+    this.play();
+    n--;
+    q();
+}
+
+</script>
+
+</body>
+</html>

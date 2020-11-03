@@ -1,0 +1,35 @@
+
+<body>
+    <form action="#"  onsubmit="textSubmitted(); return false">
+        Enter name: <input id="t" type="text">
+        <input type="submit">
+    </form>
+    <p id="answer"></p>
+    
+    <script>
+    var s = "";
+    function textSubmitted(e)
+    {
+        s = document.getElementById("t").value;
+        document.getElementById("t").value = "";
+        //e.preventDefault();
+        window.setTimeout(ask, 100);
+    }
+    function ask()
+    {
+        
+        var i = Math.floor(Math.random()*s.length);
+        var a = prompt(i+1);
+        if(a!="stop" && a)
+            displayAnswer(i,a);
+    }
+    function displayAnswer(i, a)
+    {
+        var answer = document.getElementById("answer");
+        answer.innerHTML = i+1 + " " + s.charAt(i);
+        answer.style.color = a == s.charAt(i) ? "blue" : "red";
+        window.setTimeout(ask, 2000);
+    }
+    
+    </script>
+</body>

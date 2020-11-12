@@ -1,0 +1,156 @@
+
+ 
+ 
+ 
+ 
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://gist.githubusercontent.com/jspinoza3/1805df875fe168833dddc3f7e1abbad7/raw/b422e4ac762b119f89808345d81278b95c6a759f/stringify.js"></script>
+
+
+
+<!-- 
+#
+#
+#
+say my name
+#
+#
+#
+->
+<div id="saymyname">
+	<a v-bind:href="bookmarkletJS">sayMyName</a> <i>edit the name field below to customize then drag this link into your bookmarks</i>
+	<br>
+	<input type="text" v-model="effable.params.name">
+</div>
+
+<script>
+window.addEventListener
+(
+	'load'
+	,function()
+	{
+		var app = new Vue
+		({
+			el:"#saymyname"
+			,data:
+			{
+				bookmarkletJS:""
+				,effable:
+				{
+					params:{name: "Jeoffrey Spinoza"}
+					,f() 
+					{
+						alert(this.params.name);
+					}
+				}
+			}
+			,watch:
+			{
+				effable:
+				{
+					immediate:true
+					,deep:true
+					,handler() 
+					{
+						this.bookmarkletJS="javascript: ("+stringify(this.effable, "_____PLACEHOLDER______")+").f()";
+					}
+				}	
+			}
+		
+			
+		});
+	}
+);
+</script>
+
+
+
+
+
+
+
+<!-- 
+#
+#
+#
+say my name
+#
+#
+#
+->
+<div id="generateRenamingBat">
+	<a v-bind:href="bookmarkletJS">generateRenamingBat</a> 
+</div>
+
+<script>
+window.addEventListener
+(
+	'load'
+	,function()
+	{
+		var app = new Vue
+		({
+			el:"#generateRenamingBat"
+			,data:
+			{
+				bookmarkletJS:""
+				,effable:
+				{
+					params:{}
+					,f() 
+					{
+              function downloadString(text, fileType, fileName) {
+                var blob = new Blob([text], { type: fileType });
+
+                var a = document.createElement('a');
+                a.download = fileName;
+                a.href = URL.createObjectURL(blob);
+                a.dataset.downloadurl = [fileType, a.download, a.href].join(':');
+                a.style.display = "none";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(function() { URL.revokeObjectURL(a.href); }, 1500);
+              }
+
+
+              function pad(num, size) {
+                  num = num.toString();
+                  while (num.length < size) num = "0" + num;
+                  return num;
+              }
+              var g=document.getElementsByClassName("Gallery-ContentWrapper")[0].children;
+              var prefix = prompt("how would you like to prefix the img filenames?","img");
+              var fn;
+              var bat = "";
+              var i=0;
+              while(i<g.length)
+              {
+                  fn = g[i].children[0].children[0].children[1].src.split("/").pop();
+                  bat+="ren "+fn+ " " + pad(i,6) + "."+fn.split(".").pop()+"\n";
+                  i++;
+              }
+               downloadString(bat, "text/plain", "renamePics.bat");
+					}
+				}
+			}
+			,watch:
+			{
+				effable:
+				{
+					immediate:true
+					,deep:true
+					,handler() 
+					{
+						this.bookmarkletJS="javascript: ("+stringify(this.effable, "_____PLACEHOLDER______")+").f()";
+					}
+				}	
+			}
+		
+			
+		});
+	}
+);
+</script>

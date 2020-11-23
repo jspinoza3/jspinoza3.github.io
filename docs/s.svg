@@ -27,11 +27,11 @@
       <tspan textLength="190" lengthAdjust="spacingAndGlyphs"
         font-size="50" 
         x="2" 
-        y="60">AUGMENT</tspan>
+        y="60">foo</tspan>
       <tspan textLength="183" lengthAdjust="spacingAndGlyphs"
 		font-size="47" 
 		x="2" 
 		
-		dy="39">THE FLESH</tspan>
+		dy="39">bar</tspan>
     </text>
 </svg>

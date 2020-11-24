@@ -22,7 +22,7 @@ background-color: ccccff;
 	font-family:serif;
  }
  
- h1,i{
+ h1,i, p{
 	font-family:sans-serif;
  }
  
@@ -36,9 +36,9 @@ background-color: ccccff;
 </style>
 </head>
 <body>
-<p> Filling svg text with linearGradient and shrinking it by setting the textLength attribute results in unexpected clipping in some browsers. Is your's one of them?</p>
+<p> Filling svg text with linearGradient and shrinking it by setting the textLength attribute results in unexpected clipping in some browsers. Is your's one of them? Compare <i>Figures 1 and 2</i> below to find out.</p>
 
-<h1><br><br>Your browser's rendering of some svg <code>&lt;text&gt;</code> elements:</h1>
+<h1><br>Figure 1: Your browser's rendering of some svg <code>&lt;text&gt;</code> elements:</h1>
 <svg  viewBox="0 0 100 120">
   
 	<linearGradient 
@@ -118,15 +118,18 @@ background-color: ccccff;
 </svg>
 
 
-<h1><br><br> Expected rendering (png screenshot of desktop chrome's rendering of the above svg):</h1>
+<h1><br><br>Figure 2: Expected rendering (png screenshot of desktop chrome's rendering of the above svg):</h1>
 <img src="expectation.png"/>
-<br>
-<p> The SVG markup on this page consists of 6 similar text elements that differ only on their <code>fill</code> and <code>textLength</code> attributes. The first two text elements are filled with gradient using the <code>fill="url(#idoflineargradientelement)</code> pattern. The next two  use <code>fill="green"</code>. The last two do not have the <code>fill</code> attribute set. Three of the text elements should be rendered as scrutched up text, because they have <code>textLength="100"</code> which is intended to adjust the width of the letters and spaces to ensure that the entire line of text fits in the confines of the svg viewbox.  The other three elements, which should render as normally proportioned text that gets cut off by the limits of the viewbox, all lack the <code>textLength</code> attribute. When all is well, the 6 text elements should render as in the screenshot above.<p>
 
-<h1><br><br> screenshot of failed rendering when I visit this site on my Iphone's chrome, firefox, and safari:</h1>
+
+<h1><br><br>Figure 3: screenshot of failed rendering when I visit this site on my Iphone's chrome, firefox, and safari:</h1>
 <img src="example.png"/>
-<br>
-<p> As we see in the screenshot of my iphone above, the fatal pairing in our cartesian product of <code>fill</code> and <code>textLength</code> is the very first text element, which is both filled with gradient and has its <code>textLength</code> attribute set to a constraining value. Notice how it appears to be clipped off, with only 13 characters showing: "This line wil", which are the same 13 characters showing in it's "non-scrutched", "non-textLength-having" counterpart just beneath it. Figuratively speaking, it is as though the iPhone browser , prior to compressing the width of the first line of text, went over the first two lines of text with a gradient paint brush, only painting that part that was inside the viewbox, so the part that extended beyond the viewbox prior to compression did not get painted with gradient. Further selling this figurative tale, is that when I copied the first line of SVG text and pasted into a note, I got the entire sentence <code>This line will shrink if "textLength" is set to a small enough value</code> and not just the first 13 visible characters, which proves that all of the remaining characters were there, but they just didn't get "painted"!</p> 
+
+<h1><br><br> Remarks</h1>
+<p>Comparing the rendering of the exact same markup on two different devices (<i>Figures 2 and 3</i>) leads me to believe that there is something unintended/undocumented going on here. I checked docs for <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text">text</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/textLength">textLength</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/fill">fill</a>, and <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient">linearGradient</a>, but found nothing to explain what is happening here. I searched the internet and saw <a href="https://stackoverflow.com/questions/47801804/using-textlength-attribute">vague mentions</a> of svg text rendering being problematic between browsers, but no one mentioned my specific observations which are illustrated above. You are welcome to check the source of this web page to see the svg markup in detail, but the following is a high-level summary of what to look for. </p>
+<p> <i>Figure 1</i> on this page is the rendering SVG markup, which consists of 6 similar text elements that differ only on their <code>fill</code> and <code>textLength</code> attributes. The first two text elements are filled with gradient using the <code>fill="url(#idoflineargradientelement)</code> pattern. The next two  use <code>fill="green"</code>. The last two do not have the <code>fill</code> attribute set, so they are just black. Three of the text elements should be rendered as scrutched up text, because they have <code>textLength="100"</code> which is intended to adjust the width of the letters and spaces to ensure that the entire line of text fits in the confines of the svg viewbox.  The other three elements, which should render as normally proportioned text that gets cut off by the limits of the viewbox, all lack the <code>textLength</code> attribute. When all is well, the 6 text elements should render as in <i>Figure 2</i>.<p>
+
+<p> Everything looks good in <i>Figure 3</i>, except for very first line of text. Notice how it appears to be clipped off, with only the first 13 characters showing: "This line wil", which are the same 13 characters showing in the line just beneath it. While in the case of the second line, obviously the remaining 68  characters are not showing because they extend beyond the viewbox, the fact that the same 68 characters in first line are not showing is something worth thinking about. Figuratively speaking, it is as though the iPhone browser, prior to scrunching the width of the first line of text, went over the first two lines of text with a gradient paint brush, only painting that part that was inside the viewbox, so the part that extended beyond the viewbox prior to shrunching did not get painted with gradient. Further selling this figurative tale, is that when I copied the first line of text on my iphone and pasted into a note, I got the entire sentence <code>This line will shrink if "textLength" is set to a small enough value</code> and not just the first 13 visible characters, which proves that all of the remaining characters were there, but they just didn't get "painted"! It is interesting that all the other lines painted just fine. The only fatal pairing in our cartesian product of <code>fill</code> and <code>textLength</code> attributes, is the text element that is both filled with gradient and has its <code>textLength</code> attribute set to a constraining value.</p>
 
 
 
